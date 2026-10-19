@@ -1,0 +1,47 @@
+[project]
+name = "tcvg"
+version = "0.1.0"
+description = "High-speed CV pipeline for real-time trading card recognition"
+readme = "README.md"
+authors = [
+    { name = "Turbulent-Mayday" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic-settings>=2.16.0",
+    "python-dotenv>=1.2.4",
+]
+
+[project.scripts]
+tcvg = "tcvg:main"
+
+[build-system]
+requires = ["uv_build>=0.12.14,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+backend = [
+    "fastapi>=0.148.0",
+    "uvicorn>=0.54.0",
+    "websockets>=17.2",
+]
+cv = [
+    "onnxruntime>=1.31.0",
+    "opencv-python>=5.0.0.93",
+    "ultralytics>=8.4.182",
+]
+dev = [
+    "bandit>=1.9.4",
+    "mypy>=2.4.0",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.1",
+    "vulture>=2.16",
+]
+recognition = [
+    "aiohttp>=3.14.5",
+    "beautifulsoup4>=4.15.0",
+    "faiss-cpu>=1.15.1",
+    "libsql-client>=0.3.1",
+]
