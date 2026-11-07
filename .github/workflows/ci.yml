@@ -34,17 +34,17 @@ jobs:
 
       - name: Ruff Linter & Formatter Check
         run: |
-          uv run ruff check src/database src/utils tests
-          uv run ruff format --check src/database src/utils tests
+          uv run ruff check src/database src/sql tests
+          uv run ruff format --check src/database src/sql tests
 
       - name: Mypy Type Checking
         run: uv run mypy
 
       - name: Vulture Dead Code Scan
-        run: uv run vulture src/database src/utils tests --min-confidence 80
+        run: uv run vulture src/database src/sql tests --min-confidence 80
 
       - name: Bandit Security Audit
-        run: uv run bandit -r src/database src/utils -ll
+        run: uv run bandit -r src/database src/sql -ll
 
   test-matrix:
     name: Tests (Python ${{ matrix.python-version }})
@@ -73,7 +73,7 @@ jobs:
       - name: Run Pytest with Visual Output & Coverage
         run: |
           uv run pytest -s -v --color=yes \
-            --cov=src/database --cov=src/utils \
+            --cov=src/database --cov=src/sql \
             --cov-report=term-missing \
             --cov-report=xml:coverage.xml
 
