@@ -30,7 +30,7 @@ jobs:
           python-version: "3.14"
 
       - name: Install dependencies
-        run: uv sync --all-extras --dev
+        run: uv sync --all-groups
 
       - name: Ruff Linter & Formatter Check
         run: |
@@ -68,7 +68,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: uv sync --all-extras --dev
+        run: uv sync --all-groups
 
       - name: Run Pytest with Visual Output & Coverage
         run: |
