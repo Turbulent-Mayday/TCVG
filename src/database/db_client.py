@@ -1,7 +1,8 @@
 import os
 import sqlite3
 from pathlib import Path
-from typing import Any
+from types import TracebackType
+from typing import Any, Self
 
 import libsql_client
 from dotenv import load_dotenv
@@ -17,21 +18,29 @@ class LocalSQLiteClient:
     """
 
     def __init__(self, file_url: str) -> None:
-        raw_path = file_url.removeprefix(":")
+        raw_path = file_url.removeprefix("://").removeprefix(":")
         self.db_path = Path(raw_path)
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self.conn: sqlite3.Connection | None = None
 
-    async def __aenter__(self) -> "LocalSQLiteClient":
+    async def __aenter__(self) -> Self:
         self.conn = sqlite3.connect(self.db_path)
         self.conn.row_factory = sqlite3.Row
         return self
 
-    async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+    async def __aexit__(
+        self,
+        _exc_type: type[BaseException] | None,
+        _exc_val: BaseException | None,
+        _exc_tb: TracebackType | None,
+    ) -> None:
         if self.conn:
             self.conn.close()
+            self.conn = None
 
-    async def execute(self, sql: str, params: tuple[Any, ...] = ()) -> list[sqlite3.Row]:
+    async def execute(
+        self, sql: str, params: tuple[Any, ...] = ()
+    ) -> list[sqlite3.Row]:
         if not self.conn:
             raise RuntimeError("Database connection has not been initialized.")
         cur = self.conn.cursor()
@@ -58,7 +67,9 @@ def get_db_client() -> Any:
     token = os.getenv("DATABASE_AUTH_TOKEN")
 
     if not url:
-        raise ValueError("Critical configuration missing: DATABASE_URL environment variable is not set.")
+        raise ValueError(
+            "Critical configuration missing: DATABASE_URL environment variable is not set."
+        )
 
     if url.startswith(":"):
         return LocalSQLiteClient(url)

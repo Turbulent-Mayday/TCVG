@@ -29,10 +29,12 @@ cv = [
 dev = [
     "bandit>=1.9.4",
     "mypy>=2.4.0",
+    "pandas-stubs>=3.1.0.261029",
     "pytest>=9.1.1",
     "pytest-asyncio>=1.4.0",
     "pytest-cov>=7.1.0",
     "ruff>=0.17.1",
+    "streamlit>=1.67.0",
     "vulture>=2.16",
 ]
 recognition = [
@@ -41,3 +43,23 @@ recognition = [
     "faiss-cpu>=1.15.1",
     "libsql-client>=0.3.1",
 ]
+
+[tool.mypy]
+files = [
+    "src/database",
+    "src/sql",
+    "tests",
+]
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+explicit_package_bases = true
+
+[[tool.mypy.overrides]]
+module = [
+    "libsql_client.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
