@@ -1,4 +1,4 @@
-[![CI Status]https://github.com/Turbulent-Mayday/TCVG/actions/workflows/ci.yml/badge.svg)](https://github.com/Turbulent-Mayday/TCVG/actions/workflows/ci.yml)
+[![CI Status](https://github.com/Turbulent-Mayday/TCVG/actions/workflows/ci.yml/badge.svg)](https://github.com/Turbulent-Mayday/TCVG/actions/workflows/ci.yml)
 ![Coverage](https://img.shields.io/badge/coverage-0%25-red)
 
 

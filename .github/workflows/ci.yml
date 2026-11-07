@@ -78,7 +78,7 @@ jobs:
             --cov-report=xml:coverage.xml
 
       - name: Update README coverage badge
-        if: matrix.python-version == '3.14' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: matrix.python-version == '3.14' && github.event_name == 'push'
         run: |
           python -c "
           import re
